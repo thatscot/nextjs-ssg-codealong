@@ -2,6 +2,10 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import Index, { getStaticProps } from '../pages/index';
 import API_URLS from '../constants/apis';
+import { act } from 'react-dom/test-utils';
+import { axe, toHaveNoViolations } from 'jest-axe';
+
+expect.extend(toHaveNoViolations);
 
 describe('Index page should render correctly', () => {
   it('should render the articles', () => {
@@ -35,6 +39,15 @@ describe('Index page should render correctly', () => {
 
     expectedHrefs.forEach((href) => {
       expect(links.includes(href)).toBeTruthy();
+    });
+  });
+
+  it('should be accessible', async () => {
+    await act(async () => {
+      const { container } = render(<Index articles={testData} />);
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
     });
   });
 });
