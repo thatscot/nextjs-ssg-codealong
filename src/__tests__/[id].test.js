@@ -5,6 +5,10 @@ import Index, {
   getStaticProps,
 } from '../pages/article/[id]/index';
 import API_URLS from '../constants/apis';
+import { act } from 'react-dom/test-utils';
+import { axe, toHaveNoViolations } from 'jest-axe';
+
+expect.extend(toHaveNoViolations);
 
 describe('Dynamic article page', () => {
   it('should render', () => {
@@ -14,6 +18,15 @@ describe('Dynamic article page', () => {
 
     expect(title).toBeInTheDocument();
     expect(body).toBeInTheDocument();
+  });
+
+  it('should be accessible', async () => {
+    await act(async () => {
+      const { container } = render(<Index article={testData} />);
+      const results = await axe(container);
+
+      expect(results).toHaveNoViolations();
+    });
   });
 });
 

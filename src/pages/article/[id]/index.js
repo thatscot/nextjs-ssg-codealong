@@ -1,9 +1,13 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import API_URLS from '../../../constants/apis';
 
 const article = ({ article }) => {
   return (
     <>
+      <Head>
+        <title>Home | NextJS Boiler Plate</title>
+      </Head>
       <h1>{article.title}</h1>
       <p>{article.body}</p>
       <Link href="/">Go Back</Link>

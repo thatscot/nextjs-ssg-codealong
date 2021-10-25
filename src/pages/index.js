@@ -1,9 +1,13 @@
+import Head from 'next/head';
 import API_URLS from '../constants/apis';
 import ArticleList from '../components/article/ArticleList';
 
 const Home = ({ articles }) => {
   return (
     <div>
+      <Head>
+        <title>Home | NextJS Boiler Plate</title>
+      </Head>
       <h1>Welcome</h1>
       <ArticleList articles={articles} />
     </div>
