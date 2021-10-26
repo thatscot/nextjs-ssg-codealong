@@ -43,12 +43,15 @@ describe('Index page should render correctly', () => {
   });
 
   it('should be accessible', async () => {
-    await act(async () => {
-      const { container } = render(<Index articles={testData} />);
-      const results = await axe(container);
+    const { container } = render(<Index articles={testData} />);
+    let results;
 
-      expect(results).toHaveNoViolations();
+    // Waiting for a promise from the Link component to resolve
+    await act(async () => {
+      results = await axe(container);
     });
+
+    expect(results).toHaveNoViolations();
   });
 });
 
